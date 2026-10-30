@@ -26,7 +26,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.appshub.bettbox"
+        applicationId = "com.gaomolan.bettbox.smartcore"
         minSdk = 26
         targetSdk = 36
         versionCode = flutter.versionCode

@@ -264,6 +264,10 @@ class _ResourcesViewState extends ConsumerState<ResourcesView> {
                 (geoItem) => GeoDataListItem(geoItem: geoItem),
               ),
             ),
+            ...generateSection(
+              title: 'Smart',
+              items: const [SmartModelListItem()],
+            ),
           ],
         ),
       ),
@@ -525,6 +529,236 @@ class _UpdateGeoUrlFormDialogState extends State<UpdateGeoUrlFormDialog> {
             controller: urlController,
             decoration: const InputDecoration(border: OutlineInputBorder()),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Bettbox-SmartCore: client-side hosting of the LightGBM model used by
+/// Smart policy groups.
+///
+/// The kernel only reads a file named `Model.bin` from its home
+/// directory. The app downloads one of the three published model tiers,
+/// validates it (LightGBM text models start with `tree` and end with
+/// `[/target_enhance]`), and stores it there atomically. A freshly
+/// downloaded model takes effect on the next core start.
+class SmartModelListItem extends StatefulWidget {
+  const SmartModelListItem({super.key});
+
+  @override
+  State<SmartModelListItem> createState() => _SmartModelListItemState();
+}
+
+class _SmartModelTier {
+  final String label;
+  final String fileName;
+  final int size;
+
+  const _SmartModelTier(this.label, this.fileName, this.size);
+}
+
+class _SmartModelListItemState extends State<SmartModelListItem> {
+  static const _releaseBase =
+      'https://github.com/vernesong/mihomo/releases/download/LightGBM-Model';
+  static const _tiers = <_SmartModelTier>[
+    _SmartModelTier('标准档', 'Model.bin', 9345218),
+    _SmartModelTier('中等档', 'Model-middle.bin', 18357364),
+    _SmartModelTier('大档', 'Model-large.bin', 26787747),
+  ];
+
+  FileInfo? _info;
+  bool _busy = false;
+  double? _progress;
+
+  @override
+  void initState() {
+    super.initState();
+    _refresh();
+  }
+
+  Future<File> _modelFile() async {
+    final homePath = await appPath.homeDirPath;
+    return File(join(homePath, 'Model.bin'));
+  }
+
+  Future<void> _refresh() async {
+    final file = await _modelFile();
+    FileInfo? info;
+    if (await file.exists()) {
+      final stat = await file.stat();
+      info = FileInfo(size: stat.size, lastModified: stat.modified);
+    }
+    if (mounted) setState(() => _info = info);
+  }
+
+  String _tierLabel(int size) {
+    if (size <= 12 * 1024 * 1024) return '标准档';
+    if (size <= 22 * 1024 * 1024) return '中等档';
+    return '大档';
+  }
+
+  Future<void> _handleDownloadTap() async {
+    final tier = await globalState.showCommonDialog<_SmartModelTier>(
+      child: const _SmartModelTierDialog(tiers: _tiers),
+    );
+    if (tier == null || !mounted) return;
+    await _download(tier);
+  }
+
+  Future<void> _download(_SmartModelTier tier) async {
+    setState(() {
+      _busy = true;
+      _progress = null;
+    });
+    final homePath = await appPath.homeDirPath;
+    final tmpFile = File(join(homePath, 'Model.bin.download'));
+    final targetFile = File(join(homePath, 'Model.bin'));
+    try {
+      final client = HttpClient();
+      try {
+        final request = await client.getUrl(
+          Uri.parse('$_releaseBase/${tier.fileName}'),
+        );
+        final response = await request.close();
+        if (response.statusCode != 200) {
+          throw 'HTTP ${response.statusCode}';
+        }
+        final total = response.contentLength;
+        var received = 0;
+        final sink = tmpFile.openWrite();
+        await for (final chunk in response) {
+          sink.add(chunk);
+          received += chunk.length;
+          if (mounted && total > 0) {
+            setState(() => _progress = received / total);
+          }
+        }
+        await sink.flush();
+        await sink.close();
+      } finally {
+        client.close();
+      }
+
+      final size = await tmpFile.length();
+      if (size < 1024 * 1024) {
+        throw '下载不完整（文件过小）';
+      }
+      final head = await tmpFile.openRead(0, 4).first;
+      if (String.fromCharCodes(head) != 'tree') {
+        throw '文件校验失败（文件头不符）';
+      }
+      final tailStart = size > 4096 ? size - 4096 : 0;
+      final tailBytes = await tmpFile
+          .openRead(tailStart, size)
+          .fold<List<int>>(<int>[], (acc, chunk) => acc..addAll(chunk));
+      if (!String.fromCharCodes(tailBytes).contains('[/target_enhance]')) {
+        throw '文件校验失败（文件尾不符）';
+      }
+
+      if (await targetFile.exists()) {
+        await targetFile.delete();
+      }
+      await tmpFile.rename(targetFile.path);
+      await _refresh();
+      globalState.showNotifier('Smart 模型已保存，下次启动核心时生效');
+    } catch (e) {
+      try {
+        if (await tmpFile.exists()) await tmpFile.delete();
+      } catch (_) {}
+      if (mounted) {
+        globalState.showMessage(
+          title: 'Smart 模型',
+          message: TextSpan(text: e.toString()),
+          cancelable: false,
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _busy = false;
+          _progress = null;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final info = _info;
+    return ListItem(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      title: const Text('Smart 模型 (LightGBM)'),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 6),
+          Text(
+            info == null
+                ? '未下载 · Smart 组开启 LightGBM 时需要'
+                : '${_tierLabel(info.size)} · ${info.desc}',
+            style: context.textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 4),
+          Text(_releaseBase, style: context.textTheme.bodyMedium?.toLight),
+          const SizedBox(height: 12),
+          if (_busy)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: Padding(
+                    padding: EdgeInsets.all(2),
+                    child: SyncedLoading(
+                      size: 26,
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  _progress == null
+                      ? '下载中…'
+                      : '下载中 ${(_progress! * 100).toStringAsFixed(0)}%',
+                  style: context.textTheme.bodyMedium,
+                ),
+              ],
+            )
+          else
+            CommonChip(
+              avatar: const Icon(Icons.download),
+              label: info == null ? appLocalizations.download : '更新 / 切换档位',
+              onPressed: _handleDownloadTap,
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SmartModelTierDialog extends StatelessWidget {
+  final List<_SmartModelTier> tiers;
+
+  const _SmartModelTierDialog({required this.tiers});
+
+  @override
+  Widget build(BuildContext context) {
+    return CommonDialog(
+      title: '选择模型档位',
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          for (final tier in tiers)
+            ListTile(
+              title: Text(tier.label),
+              subtitle: Text(TrafficValue(value: tier.size).show),
+              trailing: tier.fileName == 'Model-large.bin'
+                  ? const Icon(Icons.recommend)
+                  : null,
+              onTap: () => Navigator.of(context).pop(tier),
+            ),
         ],
       ),
     );

@@ -184,6 +184,12 @@ class Build {
   }) async {
     final isLib = mode == Mode.lib;
 
+    // Bettbox-SmartCore: generate the Smart kernel tree before building.
+    await Build.exec(
+      ['dart', 'tool/prepare_smart_core.dart'],
+      name: 'prepare Smart kernel',
+    );
+
     final items = buildItems.where((element) {
       return element.target == target &&
           (arch == null ? true : element.arch == arch);

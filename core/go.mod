@@ -2,7 +2,7 @@ module core
 
 go 1.20
 
-replace github.com/metacubex/mihomo => ./Clash.Meta
+replace github.com/metacubex/mihomo => ./.smart-mihomo
 
 require (
 	github.com/appshubcc/go-iperf3 v0.1.0
