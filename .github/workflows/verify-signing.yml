@@ -1,0 +1,23 @@
+name: verify-signing
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decode keystore and check all four secrets
+        env:
+          KEYSTORE: ${{ secrets.KEYSTORE }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          set -e
+          test -n "$KEYSTORE" && test -n "$KEY_ALIAS" && test -n "$STORE_PASSWORD" && test -n "$KEY_PASSWORD"
+          printf '%s' "$KEYSTORE" | base64 --decode > /tmp/keystore.jks
+          ls -la /tmp/keystore.jks
+          keytool -list -v -keystore /tmp/keystore.jks -storepass "$STORE_PASSWORD" -alias "$KEY_ALIAS" | grep -E "Alias name|SHA256"
+          keytool -certreq -keystore /tmp/keystore.jks -storepass "$STORE_PASSWORD" -alias "$KEY_ALIAS" -keypass "$KEY_PASSWORD" -file /tmp/certreq.csr > /dev/null
+          echo "VERIFY OK"
