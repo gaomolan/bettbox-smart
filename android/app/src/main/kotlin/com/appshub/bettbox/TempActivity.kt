@@ -1,8 +1,8 @@
-package com.appshub.bettbox
+package com.gaomolan.bettbox
 
 import android.app.Activity
 import android.os.Bundle
-import com.appshub.bettbox.extensions.wrapAction
+import com.gaomolan.bettbox.extensions.wrapAction
 
 class TempActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.appshub.bettbox.services
+package com.gaomolan.bettbox.services
 
 import android.annotation.SuppressLint
 import android.app.Notification
@@ -10,9 +10,9 @@ import android.app.Service
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.appshub.bettbox.GlobalState
-import com.appshub.bettbox.R
-import com.appshub.bettbox.models.VpnOptions
+import com.gaomolan.bettbox.GlobalState
+import com.gaomolan.bettbox.R
+import com.gaomolan.bettbox.models.VpnOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -34,9 +34,9 @@ suspend fun Service.createBettboxNotificationBuilder(
     isHighPriority: Boolean = GlobalState.isNotificationHighPriority
 ): NotificationCompat.Builder =
     withContext(Dispatchers.IO) {
-        val defaultComponent = ComponentName(packageName, "com.appshub.bettbox.MainActivity")
-        val lightComponent = ComponentName(packageName, "com.appshub.bettbox.MainActivityLight")
-        val darkComponent = ComponentName(packageName, "com.appshub.bettbox.MainActivityDark")
+        val defaultComponent = ComponentName(packageName, "com.gaomolan.bettbox.MainActivity")
+        val lightComponent = ComponentName(packageName, "com.gaomolan.bettbox.MainActivityLight")
+        val darkComponent = ComponentName(packageName, "com.gaomolan.bettbox.MainActivityDark")
 
         val targetComponent = NotificationComponentCache.get(packageManager, defaultComponent, lightComponent, darkComponent)
 

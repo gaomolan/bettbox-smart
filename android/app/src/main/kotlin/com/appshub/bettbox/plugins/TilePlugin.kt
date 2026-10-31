@@ -1,4 +1,4 @@
-package com.appshub.bettbox.plugins
+package com.gaomolan.bettbox.plugins
 
 import android.os.Handler
 import android.os.Looper

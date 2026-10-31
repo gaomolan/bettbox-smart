@@ -1,4 +1,4 @@
-package com.appshub.bettbox.core
+package com.gaomolan.bettbox.core
 
 import androidx.annotation.Keep
 

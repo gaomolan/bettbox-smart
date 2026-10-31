@@ -1,4 +1,4 @@
-package com.appshub.bettbox.models
+package com.gaomolan.bettbox.models
 
 import java.net.InetAddress
 

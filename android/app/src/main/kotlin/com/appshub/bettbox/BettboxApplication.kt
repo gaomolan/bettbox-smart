@@ -1,4 +1,4 @@
-package com.appshub.bettbox
+package com.gaomolan.bettbox
 
 import android.app.Application
 import android.content.Context

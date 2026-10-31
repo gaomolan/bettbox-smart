@@ -1,4 +1,4 @@
-package com.appshub.bettbox.extensions
+package com.gaomolan.bettbox.extensions
 
 import android.app.PendingIntent
 import android.content.Context
@@ -12,10 +12,10 @@ import android.system.OsConstants.IPPROTO_TCP
 import android.system.OsConstants.IPPROTO_UDP
 import android.util.Base64
 import androidx.core.graphics.drawable.toBitmap
-import com.appshub.bettbox.TempActivity
-import com.appshub.bettbox.models.CIDR
-import com.appshub.bettbox.models.Metadata
-import com.appshub.bettbox.models.VpnOptions
+import com.gaomolan.bettbox.TempActivity
+import com.gaomolan.bettbox.models.CIDR
+import com.gaomolan.bettbox.models.Metadata
+import com.gaomolan.bettbox.models.VpnOptions
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine

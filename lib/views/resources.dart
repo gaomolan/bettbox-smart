@@ -6,6 +6,7 @@ import 'package:bett_box/models/models.dart';
 import 'package:bett_box/providers/app.dart';
 import 'package:bett_box/providers/config.dart';
 import 'package:bett_box/views/proxies/providers.dart';
+import 'package:bett_box/views/smart_learning.dart';
 import 'package:bett_box/state.dart';
 import 'package:bett_box/widgets/widgets.dart';
 import 'package:material_ui/material_ui.dart';
@@ -266,7 +267,7 @@ class _ResourcesViewState extends ConsumerState<ResourcesView> {
             ),
             ...generateSection(
               title: 'Smart',
-              items: const [SmartModelListItem()],
+              items: const [SmartModelListItem(), SmartDataExportListItem()],
             ),
           ],
         ),
@@ -758,6 +759,109 @@ class _SmartModelTierDialog extends StatelessWidget {
                   ? const Icon(Icons.recommend)
                   : null,
               onTap: () => Navigator.of(context).pop(tier),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Bettbox-SmartCore: export of the Smart groups' learning data.
+///
+/// The kernel persists what the Smart groups learn (node states,
+/// per-target statistics, rankings, host failures) in the cache
+/// database inside its private home directory, which the user cannot
+/// browse directly. This item exports that data as a JSON file via
+/// the system save dialog, so it can be inspected or shared.
+class SmartDataExportListItem extends StatefulWidget {
+  const SmartDataExportListItem({super.key});
+
+  @override
+  State<SmartDataExportListItem> createState() =>
+      _SmartDataExportListItemState();
+}
+
+class _SmartDataExportListItemState extends State<SmartDataExportListItem> {
+  bool _busy = false;
+
+  Future<void> _handleExportTap() async {
+    setState(() => _busy = true);
+    try {
+      final ok = await globalState.appController.exportSmartData();
+      if (!mounted) return;
+      if (ok) {
+        globalState.showNotifier('Smart 学习数据已导出');
+      } else {
+        globalState.showMessage(
+          title: 'Smart 学习数据',
+          message: const TextSpan(text: '导出失败：核心未返回数据，或已取消保存'),
+          cancelable: false,
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        globalState.showMessage(
+          title: 'Smart 学习数据',
+          message: TextSpan(text: e.toString()),
+          cancelable: false,
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListItem(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      title: const Text('Smart 学习数据'),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 6),
+          Text(
+            '查看或导出 Smart 组已学到的节点状态、目标统计与排名',
+            style: context.textTheme.bodyMedium,
+          ),
+          const SizedBox(height: 12),
+          if (_busy)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: Padding(
+                    padding: EdgeInsets.all(2),
+                    child: SyncedLoading(
+                      size: 26,
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text('导出中…', style: context.textTheme.bodyMedium),
+              ],
+            )
+          else
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CommonChip(
+                  avatar: const Icon(Icons.visibility_outlined),
+                  label: '查看',
+                  onPressed: () {
+                    BaseNavigator.push(context, const SmartLearningView());
+                  },
+                ),
+                const SizedBox(width: 8),
+                CommonChip(
+                  avatar: const Icon(Icons.file_upload),
+                  label: '导出',
+                  onPressed: _handleExportTap,
+                ),
+              ],
             ),
         ],
       ),

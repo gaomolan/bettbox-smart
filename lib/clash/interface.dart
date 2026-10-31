@@ -81,6 +81,8 @@ mixin ClashInterface {
 
   FutureOr<String> getMemory();
 
+  FutureOr<String> exportSmartData();
+
   FutureOr<String> getCoreStatus();
 
   Future<String> startSpeedTest(String params);
@@ -585,6 +587,11 @@ abstract class ClashHandlerInterface with ClashInterface {
   @override
   FutureOr<String> getMemory() {
     return invoke<String>(method: ActionMethod.getMemory);
+  }
+
+  @override
+  FutureOr<String> exportSmartData() {
+    return invoke<String>(method: ActionMethod.exportSmartData);
   }
 
   @override

@@ -1864,6 +1864,18 @@ class AppController {
         null;
   }
 
+  Future<bool> exportSmartData() async {
+    final data = await clashCore.exportSmartData();
+    if (data.isEmpty) {
+      return false;
+    }
+    return await picker.saveFile(
+          'smart-learning-data.json',
+          Uint8List.fromList(utf8.encode(data)),
+        ) !=
+        null;
+  }
+
   Future<List<int>> backupData({String password = ''}) async {
     final homeDirPath = await appPath.homeDirPath;
     final profilesPath = await appPath.profilesPath;

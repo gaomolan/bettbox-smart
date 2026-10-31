@@ -1,4 +1,4 @@
-package com.appshub.bettbox
+package com.gaomolan.bettbox
 
 import android.app.UiModeManager
 import android.content.Context
@@ -10,10 +10,10 @@ import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.appshub.bettbox.plugins.AppPlugin
-import com.appshub.bettbox.plugins.ServicePlugin
-import com.appshub.bettbox.plugins.TilePlugin
-import com.appshub.bettbox.plugins.VpnPlugin
+import com.gaomolan.bettbox.plugins.AppPlugin
+import com.gaomolan.bettbox.plugins.ServicePlugin
+import com.gaomolan.bettbox.plugins.TilePlugin
+import com.gaomolan.bettbox.plugins.VpnPlugin
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineGroup

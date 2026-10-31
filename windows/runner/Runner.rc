@@ -72,16 +72,21 @@ IDI_APP_ICON            ICON                    "resources\\app_icon.ico"
 #define VERSION_AS_STRING "1.0.0"
 #endif
 
+// Bettbox-SmartCore: present this fork's release version (see
+// appReleaseVersion in lib/common/constant.dart).
+#undef VERSION_AS_STRING
+#define VERSION_AS_STRING "1.19.7.1.2"
+
 #ifdef BETTBOX_DEV
-#define APP_FILE_DESCRIPTION "Bettbox Dev"
+#define APP_FILE_DESCRIPTION "Bettbox Smart Dev"
 #define APP_INTERNAL_NAME "bettbox_dev"
 #define APP_ORIGINAL_FILENAME "Bettbox.exe"
-#define APP_PRODUCT_NAME "Bettbox Dev"
+#define APP_PRODUCT_NAME "Bettbox Smart Dev"
 #else
-#define APP_FILE_DESCRIPTION "Bettbox"
+#define APP_FILE_DESCRIPTION "Bettbox Smart"
 #define APP_INTERNAL_NAME "bettbox"
 #define APP_ORIGINAL_FILENAME "Bettbox.exe"
-#define APP_PRODUCT_NAME "Bettbox"
+#define APP_PRODUCT_NAME "Bettbox Smart"
 #endif
 
 VS_VERSION_INFO VERSIONINFO
@@ -101,11 +106,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.appshub" "\0"
+            VALUE "CompanyName", "com.gaomolan" "\0"
             VALUE "FileDescription", APP_FILE_DESCRIPTION "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", APP_INTERNAL_NAME "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2025 com.appshub. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 com.gaomolan. All rights reserved." "\0"
             VALUE "OriginalFilename", APP_ORIGINAL_FILENAME "\0"
             VALUE "ProductName", APP_PRODUCT_NAME "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

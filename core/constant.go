@@ -130,6 +130,7 @@ const (
 	getExternalProviderMethod            Method = "getExternalProvider"
 	getCountryCodeMethod                 Method = "getCountryCode"
 	getMemoryMethod                      Method = "getMemory"
+	exportSmartDataMethod                Method = "exportSmartData"
 	updateGeoDataMethod                  Method = "updateGeoData"
 	updateExternalProviderMethod         Method = "updateExternalProvider"
 	sideLoadExternalProviderMethod       Method = "sideLoadExternalProvider"

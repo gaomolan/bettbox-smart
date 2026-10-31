@@ -16,7 +16,7 @@ val mKeyPassword: String? = localProperties.getProperty("keyPassword")
 val isRelease = mStoreFile.exists() && mStorePassword != null && mKeyAlias != null && mKeyPassword != null
 
 android {
-    namespace = "com.appshub.bettbox"
+    namespace = "com.gaomolan.bettbox"
     compileSdk = 36
     ndkVersion = "28.2.13676358"
 
@@ -30,7 +30,11 @@ android {
         minSdk = 26
         targetSdk = 36
         versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        // Bettbox-SmartCore: align the platform version name with this
+        // fork's release version (see appReleaseVersion in
+        // lib/common/constant.dart); pubspec keeps the upstream
+        // three-part version because pub rejects four-part versions.
+        versionName = "1.19.7.1.2"
     }
 
     signingConfigs {

@@ -329,6 +329,9 @@ func handleAction(action *Action, result ActionResult) {
 			result.success(value)
 		})
 		return
+	case exportSmartDataMethod:
+		result.success(handleExportSmartData())
+		return
 	case getCoreStatusMethod:
 		handleGetCoreStatus(func(value string) {
 			result.success(value)

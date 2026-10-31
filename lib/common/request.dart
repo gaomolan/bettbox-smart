@@ -269,7 +269,7 @@ class Request {
       if (location != null && location.contains('/releases/tag/')) {
         final remoteVersion = location.split('/').last.trim();
         if (remoteVersion.isNotEmpty) {
-          final version = globalState.packageInfo.version;
+          final version = appReleaseVersion;
           final hasUpdate =
               utils.compareVersions(
                 remoteVersion.replaceAll('v', ''),

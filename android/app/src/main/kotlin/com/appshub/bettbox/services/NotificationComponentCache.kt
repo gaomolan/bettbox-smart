@@ -1,4 +1,4 @@
-package com.appshub.bettbox.services
+package com.gaomolan.bettbox.services
 
 import android.content.ComponentName
 import android.content.pm.PackageManager

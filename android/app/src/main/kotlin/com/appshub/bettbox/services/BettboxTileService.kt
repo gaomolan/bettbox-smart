@@ -1,12 +1,12 @@
-package com.appshub.bettbox.services
+package com.gaomolan.bettbox.services
 
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import androidx.annotation.RequiresApi
-import com.appshub.bettbox.GlobalState
-import com.appshub.bettbox.RunState
-import com.appshub.bettbox.R
+import com.gaomolan.bettbox.GlobalState
+import com.gaomolan.bettbox.RunState
+import com.gaomolan.bettbox.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

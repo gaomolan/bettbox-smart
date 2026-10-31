@@ -43,7 +43,15 @@ const configKey = 'config';
 const customSidebarIconKey = 'custom_sidebar_icon';
 const customDashboardTitleKey = 'custom_dashboard_title';
 const double dialogCommonWidth = 300;
-const repository = 'gaomolan/Bettbox-SmartCore';
+const repository = 'gaomolan/bettbox-smart';
+
+// Bettbox-SmartCore release version: the official version digits with
+// this fork's own counter appended. pubspec.yaml must keep the
+// upstream three-part version (pub rejects four-part versions), so
+// this constant is the source of truth shown in About and used for
+// update checks; the Android versionName and the Windows version
+// string are aligned to it in their platform files.
+const appReleaseVersion = '1.19.7.1.2';
 const ipInfoToken = String.fromEnvironment('IPINFO_TOKEN', defaultValue: '');
 const defaultExternalController = '127.0.0.1:9090';
 const maxMobileWidth = 600;

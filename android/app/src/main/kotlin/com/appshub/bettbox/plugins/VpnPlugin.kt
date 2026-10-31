@@ -1,4 +1,4 @@
-package com.appshub.bettbox.plugins
+package com.gaomolan.bettbox.plugins
 
 import android.content.ComponentName
 import android.content.Context
@@ -13,19 +13,19 @@ import android.os.Build
 import android.os.IBinder
 import android.widget.Toast
 import androidx.core.content.getSystemService
-import com.appshub.bettbox.BettboxApplication
-import com.appshub.bettbox.GlobalState
-import com.appshub.bettbox.RunState
-import com.appshub.bettbox.core.Core
-import com.appshub.bettbox.extensions.awaitResult
-import com.appshub.bettbox.extensions.asSocketAddressText
-import com.appshub.bettbox.extensions.resolveDns
-import com.appshub.bettbox.models.StartForegroundParams
-import com.appshub.bettbox.models.VpnOptions
-import com.appshub.bettbox.modules.SuspendModule
-import com.appshub.bettbox.services.BaseServiceInterface
-import com.appshub.bettbox.services.BettboxService
-import com.appshub.bettbox.services.BettboxVpnService
+import com.gaomolan.bettbox.BettboxApplication
+import com.gaomolan.bettbox.GlobalState
+import com.gaomolan.bettbox.RunState
+import com.gaomolan.bettbox.core.Core
+import com.gaomolan.bettbox.extensions.awaitResult
+import com.gaomolan.bettbox.extensions.asSocketAddressText
+import com.gaomolan.bettbox.extensions.resolveDns
+import com.gaomolan.bettbox.models.StartForegroundParams
+import com.gaomolan.bettbox.models.VpnOptions
+import com.gaomolan.bettbox.modules.SuspendModule
+import com.gaomolan.bettbox.services.BaseServiceInterface
+import com.gaomolan.bettbox.services.BettboxService
+import com.gaomolan.bettbox.services.BettboxVpnService
 import com.google.gson.Gson
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.BinaryMessenger
@@ -675,7 +675,7 @@ data object VpnPlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
         }
         if (!canStart) return
 
-        com.appshub.bettbox.core.Core.startTun(
+        com.gaomolan.bettbox.core.Core.startTun(
             fd = fd ?: 0,
             protect = this@VpnPlugin::protect,
             resolverProcess = this@VpnPlugin::resolverProcess,

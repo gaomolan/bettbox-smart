@@ -272,6 +272,7 @@ enum ActionMethod {
   stopListener,
   getCountryCode,
   getMemory,
+  exportSmartData,
   crash,
   setupConfig,
   flushFakeIP,

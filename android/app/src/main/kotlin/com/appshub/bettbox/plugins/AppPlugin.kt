@@ -1,4 +1,4 @@
-package com.appshub.bettbox.plugins
+package com.gaomolan.bettbox.plugins
 
 import android.Manifest
 import android.app.Activity
@@ -20,12 +20,12 @@ import androidx.core.content.getSystemService
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
-import com.appshub.bettbox.BettboxApplication
-import com.appshub.bettbox.GlobalState
-import com.appshub.bettbox.R
-import com.appshub.bettbox.extensions.awaitResult
-import com.appshub.bettbox.extensions.getActionIntent
-import com.appshub.bettbox.models.Package
+import com.gaomolan.bettbox.BettboxApplication
+import com.gaomolan.bettbox.GlobalState
+import com.gaomolan.bettbox.R
+import com.gaomolan.bettbox.extensions.awaitResult
+import com.gaomolan.bettbox.extensions.getActionIntent
+import com.gaomolan.bettbox.models.Package
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -567,9 +567,9 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
         val context = BettboxApplication.getAppContext()
         val pm = context.packageManager
         val packageName = context.packageName
-        val defaultComponent = android.content.ComponentName(packageName, "com.appshub.bettbox.MainActivity")
-        val lightComponent = android.content.ComponentName(packageName, "com.appshub.bettbox.MainActivityLight")
-        val darkComponent = android.content.ComponentName(packageName, "com.appshub.bettbox.MainActivityDark")
+        val defaultComponent = android.content.ComponentName(packageName, "com.gaomolan.bettbox.MainActivity")
+        val lightComponent = android.content.ComponentName(packageName, "com.gaomolan.bettbox.MainActivityLight")
+        val darkComponent = android.content.ComponentName(packageName, "com.gaomolan.bettbox.MainActivityDark")
 
         if (useDarkIcon) {
             pm.setComponentEnabledSetting(darkComponent, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
@@ -580,7 +580,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
             pm.setComponentEnabledSetting(darkComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP)
             pm.setComponentEnabledSetting(lightComponent, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP)
         }
-        com.appshub.bettbox.services.NotificationComponentCache.invalidate()
+        com.gaomolan.bettbox.services.NotificationComponentCache.invalidate()
         VpnPlugin.updateNotificationIcon()
     }
 

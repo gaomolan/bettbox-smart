@@ -1,15 +1,15 @@
-package com.appshub.bettbox
+package com.gaomolan.bettbox
 
 import android.content.ComponentName
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.service.quicksettings.TileService
-import com.appshub.bettbox.plugins.AppPlugin
-import com.appshub.bettbox.plugins.ServicePlugin
-import com.appshub.bettbox.plugins.TilePlugin
-import com.appshub.bettbox.plugins.VpnPlugin
-import com.appshub.bettbox.services.BettboxTileService
+import com.gaomolan.bettbox.plugins.AppPlugin
+import com.gaomolan.bettbox.plugins.ServicePlugin
+import com.gaomolan.bettbox.plugins.TilePlugin
+import com.gaomolan.bettbox.plugins.VpnPlugin
+import com.gaomolan.bettbox.services.BettboxTileService
 import io.flutter.FlutterInjector
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.dart.DartExecutor

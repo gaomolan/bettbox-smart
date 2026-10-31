@@ -1,4 +1,4 @@
-package com.appshub.bettbox.services
+package com.gaomolan.bettbox.services
 
 import android.annotation.SuppressLint
 import android.app.Service
@@ -10,9 +10,9 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import androidx.core.app.NotificationCompat
-import com.appshub.bettbox.GlobalState
-import com.appshub.bettbox.R
-import com.appshub.bettbox.models.VpnOptions
+import com.gaomolan.bettbox.GlobalState
+import com.gaomolan.bettbox.R
+import com.gaomolan.bettbox.models.VpnOptions
 
 class BettboxService : Service(), BaseServiceInterface {
 

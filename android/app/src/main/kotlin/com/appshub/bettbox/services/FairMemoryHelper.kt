@@ -1,4 +1,4 @@
-package com.appshub.bettbox.services
+package com.gaomolan.bettbox.services
 
 import android.content.BroadcastReceiver
 import android.content.Context

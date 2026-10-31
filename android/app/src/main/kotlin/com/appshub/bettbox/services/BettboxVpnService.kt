@@ -1,4 +1,4 @@
-package com.appshub.bettbox.services
+package com.gaomolan.bettbox.services
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -14,14 +14,14 @@ import android.os.Parcel
 import android.os.PowerManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.appshub.bettbox.GlobalState
-import com.appshub.bettbox.extensions.getIpv4RouteAddress
-import com.appshub.bettbox.extensions.getIpv6RouteAddress
-import com.appshub.bettbox.extensions.toCIDR
-import com.appshub.bettbox.models.AccessControlMode
-import com.appshub.bettbox.models.VpnOptions
-import com.appshub.bettbox.plugins.VpnPlugin
-import com.appshub.bettbox.R
+import com.gaomolan.bettbox.GlobalState
+import com.gaomolan.bettbox.extensions.getIpv4RouteAddress
+import com.gaomolan.bettbox.extensions.getIpv6RouteAddress
+import com.gaomolan.bettbox.extensions.toCIDR
+import com.gaomolan.bettbox.models.AccessControlMode
+import com.gaomolan.bettbox.models.VpnOptions
+import com.gaomolan.bettbox.plugins.VpnPlugin
+import com.gaomolan.bettbox.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

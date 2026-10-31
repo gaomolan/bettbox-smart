@@ -18,9 +18,9 @@
 namespace {
 
 #ifdef BETTBOX_DEV
-constexpr const wchar_t kAppUserModelId[] = L"Appshub.Bettbox.Dev";
+constexpr const wchar_t kAppUserModelId[] = L"Gaomolan.BettboxSmart.Dev";
 #else
-constexpr const wchar_t kAppUserModelId[] = L"Appshub.Bettbox";
+constexpr const wchar_t kAppUserModelId[] = L"Gaomolan.BettboxSmart";
 #endif
 
 static std::wstring GetPortableDirectory() {
@@ -57,7 +57,7 @@ static std::wstring GetDumpDirectory() {
   if (!dir.empty() && dir.back() != L'\\') {
     dir += L'\\';
   }
-  dir += L"Bettbox\\crash_dumps";
+  dir += L"BettboxSmart\\crash_dumps";
   return dir;
 }
 

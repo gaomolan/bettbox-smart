@@ -456,6 +456,10 @@ class ClashCore {
     return int.parse(value);
   }
 
+  Future<String> exportSmartData() async {
+    return await clashInterface.exportSmartData();
+  }
+
   Future<CoreStatus?> getCoreStatus() async {
     final value = await clashInterface.getCoreStatus();
     if (value.isEmpty) {

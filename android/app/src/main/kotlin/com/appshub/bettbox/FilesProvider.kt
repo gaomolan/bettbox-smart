@@ -1,4 +1,4 @@
-package com.appshub.bettbox
+package com.gaomolan.bettbox
 
 import android.database.Cursor
 import android.database.MatrixCursor

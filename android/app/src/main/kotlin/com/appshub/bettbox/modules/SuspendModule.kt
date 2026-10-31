@@ -1,4 +1,4 @@
-package com.appshub.bettbox.modules
+package com.gaomolan.bettbox.modules
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -9,7 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import androidx.core.content.getSystemService
-import com.appshub.bettbox.core.Core
+import com.gaomolan.bettbox.core.Core
 
 class SuspendModule(private val context: Context) {
     private var isInstalled = false
@@ -37,7 +37,7 @@ class SuspendModule(private val context: Context) {
         if (isSuspended) {
             Core.dozeSuspend(false)
             isSuspended = false
-            com.appshub.bettbox.plugins.VpnPlugin.onUpdateNetwork()
+            com.gaomolan.bettbox.plugins.VpnPlugin.onUpdateNetwork()
         }
     }
 

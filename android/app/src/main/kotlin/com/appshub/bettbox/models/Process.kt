@@ -1,4 +1,4 @@
-package com.appshub.bettbox.models
+package com.gaomolan.bettbox.models
 
 data class Process(
     val id: String,

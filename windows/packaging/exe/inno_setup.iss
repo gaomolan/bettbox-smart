@@ -216,9 +216,11 @@ var
   RegistryKeys: TArrayOfString;
   i: Integer;
 begin
-  SetArrayLength(RegistryKeys, 2);
+  SetArrayLength(RegistryKeys, 4);
   RegistryKeys[0] := 'Software\com.appshub.bettbox';
   RegistryKeys[1] := 'Software\com.appshub\Bettbox';
+  RegistryKeys[2] := 'Software\com.gaomolan.bettbox';
+  RegistryKeys[3] := 'Software\com.gaomolan\Bettbox Smart';
   
   for i := 0 to GetArrayLength(RegistryKeys)-1 do
   begin
@@ -234,9 +236,10 @@ var
 begin
   AppDataPath := ExpandConstant('{userappdata}');
   
-  SetArrayLength(UserDataPaths, 2);
+  SetArrayLength(UserDataPaths, 3);
   UserDataPaths[0] := AppDataPath + '\com.appshub.bettbox';
   UserDataPaths[1] := AppDataPath + '\com.appshub\Bettbox';
+  UserDataPaths[2] := AppDataPath + '\com.gaomolan\Bettbox Smart';
   
   for i := 0 to GetArrayLength(UserDataPaths)-1 do
   begin
@@ -249,6 +252,11 @@ begin
   if DirExists(AppDataPath + '\com.appshub') then
   begin
     RemoveDir(AppDataPath + '\com.appshub');
+  end;
+
+  if DirExists(AppDataPath + '\com.gaomolan') then
+  begin
+    RemoveDir(AppDataPath + '\com.gaomolan');
   end;
 end;
 
